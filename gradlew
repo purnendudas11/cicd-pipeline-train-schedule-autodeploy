@@ -28,7 +28,8 @@ APP_NAME="Gradle"
 APP_BASE_NAME=`basename "$0"`
 
 # Add default JVM options here. You can also use JAVA_OPTS and GRADLE_OPTS to pass JVM options to this script.
-DEFAULT_JVM_OPTS="/usr/lib/jvm/java-11-openjdk-11.0.17.0.8-2.el7_9.x86_64"
+# DEFAULT_JVM_OPTS="/usr/lib/jvm/java-11-openjdk-11.0.17.0.8-2.el7_9.x86_64"
+JAVA_OPTS="$JAVA_OPTS -D64"
 
 # Use the maximum available, or set MAX_FD != -1 to use that value.
 MAX_FD="maximum"
