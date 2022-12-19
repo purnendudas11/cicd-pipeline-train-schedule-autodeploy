@@ -29,8 +29,9 @@ APP_BASE_NAME=`basename "$0"`
 
 # Add default JVM options here. You can also use JAVA_OPTS and GRADLE_OPTS to pass JVM options to this script.
 # DEFAULT_JVM_OPTS="-Xmx64m -Xmx2G"
-JAVA_OPTS="Xmx64m -Xmx2G"
+# JAVA_OPTS="Xmx64m -Xmx2G"
 # GRADLE_OPTS=-Xms1724m -Xmx5048m
+GRADLE_OPTS=WHATEVER
 
 # Use the maximum available, or set MAX_FD != -1 to use that value.
 MAX_FD="maximum"
