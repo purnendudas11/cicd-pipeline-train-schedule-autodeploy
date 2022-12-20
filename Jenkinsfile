@@ -79,8 +79,8 @@ pipeline {
 //                 }
 //         }
         stage('Apply Kubernetes files') {
-            withKubeConfig([credentialsId: 'user1', serverUrl: 'https://api.k8s.my-company.com']) {
-                    sh 'kubectl apply -f my-kubernetes-directory'
+            withKubeConfig([credentialsId: 'admin', serverUrl: 'https://172.31.92.201:6443']) {
+                    sh 'kubectl apply -f train-schedule-kube-canary.yml'
             }
         }
     }
