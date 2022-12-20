@@ -78,11 +78,27 @@ pipeline {
 //                         sh 'kubectl apply -f train-schedule-kube-canary.yml'
 //                 }
 //         }
-        stage('Apply Kubernetes files') {
+        stage('CanaryDeploy') {
+            environment { 
+                CANARY_REPLICAS = 1
+            }
             steps {
                 withKubeConfig([credentialsId: 'kubeconfig', serverUrl: 'https://172.31.92.201:6443']) {
                         sh 'kubectl apply -f train-schedule-kube-canary.yml'
                 }
+            }
+        }
+        stage('DeployToProduction') {
+            environment { 
+                CANARY_REPLICAS = 0
+            }
+            steps {
+                input 'Deploy to Production?'
+                milestone(1)
+                withKubeConfig([credentialsId: 'kubeconfig', serverUrl: 'https://172.31.92.201:6443']) {
+                        sh 'kubectl apply -f train-schedule-kube-canary.yml'
+                        sh 'kubectl apply -f train-schedule-kube.yml'
+                }  
             }
         }
     }
