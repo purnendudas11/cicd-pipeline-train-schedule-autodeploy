@@ -57,25 +57,27 @@ pipeline {
 //             when {
 //                 branch 'master'
 //             }
-            environment { 
-                CANARY_REPLICAS = 0
-            }
-            steps {
-                input 'Deploy to Production?'
-                milestone(1)
-                kubernetesDeploy(
-                    kubeconfigId: 'kubeconfig',
-                    configs: 'train-schedule-kube-canary.yml',
-                    enableConfigSubstitution: true
-                )
-                kubernetesDeploy(
-                    kubeconfigId: 'kubeconfig',
-                    configs: 'train-schedule-kube.yml',
-                    enableConfigSubstitution: true
-                )
-            }
-//             kubeconfigId: 'kubeconfig',
-//             sh ("kubectl create -f train-schedule-kube-canary.yml")
+//             environment { 
+//                 CANARY_REPLICAS = 0
+//             }
+//             steps {
+//                 input 'Deploy to Production?'
+//                 milestone(1)
+//                 kubernetesDeploy(
+//                     kubeconfigId: 'kubeconfig',
+//                     configs: 'train-schedule-kube-canary.yml',
+//                     enableConfigSubstitution: true
+//                 )
+//                 kubernetesDeploy(
+//                     kubeconfigId: 'kubeconfig',
+//                     configs: 'train-schedule-kube.yml',
+//                     enableConfigSubstitution: true
+//                 )
+//             }
+
+                withKubeConfig([credentialsId: 'admin', serverUrl: 'https://172.31.92.201:6443']) {
+                        sh 'kubectl apply -f train-schedule-kube-canary.yml'
+                }
         }
     }
 }
