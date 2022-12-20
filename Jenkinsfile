@@ -93,8 +93,8 @@ pipeline {
                 CANARY_REPLICAS = 0
             }
             steps {
-                input 'Deploy to Production?'
-                milestone(1)
+//                 input 'Deploy to Production?'
+//                 milestone(1)
                 withKubeConfig([credentialsId: 'kubeconfig', serverUrl: 'https://172.31.92.201:6443']) {
                         sh 'kubectl apply -f train-schedule-kube-canary.yml'
                         sh 'kubectl apply -f train-schedule-kube.yml'
