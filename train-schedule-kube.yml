@@ -33,7 +33,7 @@ spec:
     spec:
       containers:
       - name: train-schedule
-        image: ${env.DOCKER_IMAGE_NAME}:${env.BUILD_NUMBER}
+        image: purnendudas11/train-schedule:${BUILD_NUMBER}
         ports:
         - containerPort: 8080
         livenessProbe:
