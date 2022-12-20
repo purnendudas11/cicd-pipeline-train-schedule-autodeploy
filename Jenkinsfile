@@ -79,8 +79,10 @@ pipeline {
 //                 }
 //         }
         stage('Apply Kubernetes files') {
-            withKubeConfig([credentialsId: 'admin', serverUrl: 'https://172.31.92.201:6443']) {
-                    sh 'kubectl apply -f train-schedule-kube-canary.yml'
+            steps {
+                withKubeConfig([credentialsId: 'admin', serverUrl: 'https://172.31.92.201:6443']) {
+                        sh 'kubectl apply -f train-schedule-kube-canary.yml'
+                }
             }
         }
     }
