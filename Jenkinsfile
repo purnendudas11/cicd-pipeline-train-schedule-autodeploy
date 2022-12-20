@@ -38,46 +38,50 @@ pipeline {
                 }
             }
         }
-        stage('CanaryDeploy') {
-//             when {
-//                 branch 'master'
-//             }
-            environment { 
-                CANARY_REPLICAS = 1
-            }
-            steps {
-                kubernetesDeploy(
-                    kubeconfigId: 'kubeconfig',
-                    configs: 'train-schedule-kube-canary.yml',
-                    enableConfigSubstitution: true
-                )
-            }
-        }
-        stage('DeployToProduction') {
-//             when {
-//                 branch 'master'
-//             }
+//         stage('CanaryDeploy') {
+// //             when {
+// //                 branch 'master'
+// //             }
 //             environment { 
-//                 CANARY_REPLICAS = 0
+//                 CANARY_REPLICAS = 1
 //             }
 //             steps {
-//                 input 'Deploy to Production?'
-//                 milestone(1)
 //                 kubernetesDeploy(
 //                     kubeconfigId: 'kubeconfig',
 //                     configs: 'train-schedule-kube-canary.yml',
 //                     enableConfigSubstitution: true
 //                 )
-//                 kubernetesDeploy(
-//                     kubeconfigId: 'kubeconfig',
-//                     configs: 'train-schedule-kube.yml',
-//                     enableConfigSubstitution: true
-//                 )
 //             }
-
-                withKubeConfig([credentialsId: 'admin', serverUrl: 'https://172.31.92.201:6443']) {
-                        sh 'kubectl apply -f train-schedule-kube-canary.yml'
-                }
+//         }
+//         stage('DeployToProduction') {
+// //             when {
+// //                 branch 'master'
+// //             }
+// //             environment { 
+// //                 CANARY_REPLICAS = 0
+// //             }
+// //             steps {
+// //                 input 'Deploy to Production?'
+// //                 milestone(1)
+// //                 kubernetesDeploy(
+// //                     kubeconfigId: 'kubeconfig',
+// //                     configs: 'train-schedule-kube-canary.yml',
+// //                     enableConfigSubstitution: true
+// //                 )
+// //                 kubernetesDeploy(
+// //                     kubeconfigId: 'kubeconfig',
+// //                     configs: 'train-schedule-kube.yml',
+// //                     enableConfigSubstitution: true
+// //                 )
+// //             }
+//                 withKubeConfig([credentialsId: 'admin', serverUrl: 'https://172.31.92.201:6443']) {
+//                         sh 'kubectl apply -f train-schedule-kube-canary.yml'
+//                 }
+//         }
+        stage('Apply Kubernetes files') {
+            withKubeConfig([credentialsId: 'user1', serverUrl: 'https://api.k8s.my-company.com']) {
+                    sh 'kubectl apply -f my-kubernetes-directory'
+            }
         }
     }
 }
